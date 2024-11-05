@@ -21,8 +21,14 @@ public class GameState {
         board[row][col] = player;
     }
 
-    public boolean isGameEnded() {
-        return checkWinner('X') || checkWinner('O') || isBoardFull();
+    public boolean isBoardFull() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == '\0')
+                    return false;
+            }
+        }
+        return true;
     }
 
     public boolean checkWinner(char player) {
@@ -32,17 +38,12 @@ public class GameState {
                 return true;
             }
         }
+
         return (board[0][0] == player && board[1][1] == player && board[2][2] == player) ||
                 (board[0][2] == player && board[1][1] == player && board[2][0] == player);
     }
 
-    public boolean isBoardFull() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i][j] == '\0')
-                    return false;
-            }
-        }
-        return true;
+    public boolean isGameEnded() {
+        return checkWinner('x') || checkWinner('Y') || isBoardFull();
     }
 }

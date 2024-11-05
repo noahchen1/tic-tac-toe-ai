@@ -24,31 +24,15 @@ public class QLearningAI {
         }
     }
 
-    public void updateQTable(String state, int action, double reward, String nextState) {
-        double currentQ = qTable.getOrDefault(state, new HashMap<>()).getOrDefault(action, 0.0);
-        double maxNextQ = qTable.getOrDefault(nextState, new HashMap<>())
-                .values().stream().max(Double::compare).orElse(0.0);
-
-        double updatedQ = currentQ + learningRate * (reward + discountFactor * maxNextQ - currentQ);
-        qTable.computeIfAbsent(state, k -> new HashMap<>()).put(action, updatedQ);
-    }
-
-    private int chooseRandomAction(GameState gameState) {
+    public int chooseRandomAction(GameState gameState) {
         Random rand = new Random();
         int row, col;
+    
         do {
             row = rand.nextInt(3);
             col = rand.nextInt(3);
         } while (!gameState.isMoveValid(row, col));
+    
         return row * 3 + col;
-    }
-
-    public void printQTable() {
-        System.out.println("Current Q-Table:");
-        for (Map.Entry<String, Map<Integer, Double>> entry : qTable.entrySet()) {
-            System.out.print("State: " + entry.getKey() + " -> ");
-            System.out.println(entry.getValue());
-        }
-    }
-
+    }     
 }
